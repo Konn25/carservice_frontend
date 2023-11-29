@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<br><br>
+<div class="col text-center">
+    
+    <button type="button" (click)="openUpdateModal(newCar)" class="btn btn-primary me-1">Add new car</button>
+
+    <!-- The new car modal -->
+    <ng-template #newCar let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add new car</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <h2>Manufacturer: <input type="text" #manufacturer></h2> 
+            <h2>Type: <input type="text" #cartype></h2>  
+            <h2>Year: <input type="text" #year></h2>  
+            <h2>Engine: <input type="text" #engine></h2>
+            <h2>Fuel: <input type="text" #fuel></h2>
+            <h2>Kilometer: <input type="text" #kilometer></h2>
+            <h2>Price: <input type="text" #price></h2>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="addNewCar( manufacturer.value, cartype.value, engine.value, fuel.value, kilometer.value, year.value, price.value)">Save</button>
+        </div>
+    </ng-template>
+
+</div>
+
+<br><br>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    <div *ngFor="let x of userAllCars"  class="col mb-2">
+      <div class="card" style="max-width: 25em;">
+        <img src="https://cdn-icons-png.flaticon.com/128/2555/2555013.png" class="card-img-top"   alt="car">
+            <div class="card-body">
+                <h5 class="card-title">{{x.manufacturer}} {{x.type}}</h5>
+                <p class="card-text"><b>Year:</b> {{x.year}}</p>
+                <p class="card-text"><b>Engine:</b> {{x.motor}}</p>
+                <p class="card-text"><b>Fuel:</b> {{x.fuel}}</p>
+                <p class="card-text"><b>Kilometer:</b>  {{x.kilometer}}</p>
+                <p class="card-text"><b>Price:</b>  {{x.price}}</p>
+
+                <a routerLink="car/data/{{x.id}}" class="btn btn-primary me-1">See more details</a>
+                <button type="button" (click)="openUpdateModal(content)"  class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#updateModal"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" (click)="deleteCar(x.id)" class="btn btn-danger me-1"><i class="bi bi-trash3-fill"></i></button>
+
+
+                <!-- The update modal -->
+                <ng-template #content let-modal>
+	                <div class="modal-header">
+		                <h4 class="modal-title" id="modal-basic-title">Update {{x.manufacturer}} {{x.type}} {{x.year}}</h4>
+		                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	                </div>
+	                <div class="modal-body">
+                        <h2>Manufacturer: <input type="text" value={{x.manufacturer}} #manufacturer></h2> 
+                        <h2>Type: <input type="text" value={{x.type}} #cartype></h2>  
+                        <h2>Year: <input type="text" value={{x.year}} #year></h2>  
+                        <h2>Engine: <input type="text" value={{x.motor}} #engine></h2>
+                        <h2>Fuel: <input type="text" value={{x.fuel}} #fuel></h2>
+                        <h2>Kilometer: <input type="text" value={{x.kilometer}} #kilometer></h2>
+                        <h2>Price: <input type="text" value={{x.price}} #price></h2>
+	                </div>
+	                <div class="modal-footer">
+		                <button type="button" class="btn btn-outline-dark" (click)="updateUpdateModal(x.id, manufacturer.value, cartype.value, engine.value, fuel.value, kilometer.value, year.value, price.value)">Save</button>
+	                </div>
+                </ng-template>
+
+            </div>
+        </div>
+  
+    </div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,15 @@
+<div class="text-center my-3">
+    <h1>{{checkCar?.manufacturer}} {{checkCar?.type}} {{checkCar?.motor}} {{checkCar?.year}}</h1>
+</div>
+
+
+<div class="container text-center">
+    <button type="button" class="btn btn-primary me-2" routerLink="repairs">Repairs</button>
+    <button type="button" class="btn btn-primary me-2" routerLink="fuelconsumption">Fuel consumption</button>
+    <button type="button" class="btn btn-primary me-2" routerLink="picture">Update Picture</button>
+</div>
+
+
+<div class="my-4">
+    <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>    
+</div> 

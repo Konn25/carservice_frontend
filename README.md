@@ -1,27 +1,25 @@
-# CarFrontend
+# Car service frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.5.
+I made a frontend for my car service backend (You can find it here: https://github.com/Konn25/carservice ). 
 
-## Development server
+## You can:
+ - Register and login user
+ - Store your car(s)
+ - Upload your car(s) picture(s)
+ - Register your fuel consumption in a table
+ - Record your repairs in a table
+ - Repairs and fuel consumptions in a graph
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+ # I used the following:
+ - Angular 16.2.11
+ - CanvasJs (https://canvasjs.com)
 
-## Code scaffolding
+ # How to run
+    1) Firstly, download the backend from here https://github.com/Konn25/carservice
+    2) Download the frontend 
+    3) Run the backend
+    4) Then you need to navigate to the ***frontend*** project directory.
+    5) Use the following command in the terminal ***ng-serve***
+    6) Open your browser and navigate to http://localhost:4200/
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

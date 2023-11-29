@@ -1,0 +1,52 @@
+<div class="container text-center">
+  <button type="button" (click)="goBack()" class="btn btn-primary my-3">Back</button>
+</div>
+
+<div class="container text-center">
+<label class="image-upload-container btn btn-bwm">
+    <span>Select Image</span>
+    <input #imageInput
+           type="file"
+           accept="image/*"
+           (change)="processFile(imageInput)">
+  </label>
+  
+  
+  <div *ngIf="selectedFile" class="img-preview-container">
+  
+    <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"
+         [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+    </div>
+  
+    <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+      <div class="img-spinning-circle"></div>
+    </div>
+  
+    <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
+    <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed! (or Picture size is too big)</div>
+  </div>
+</div>
+
+<div>
+
+  <table class="table my-3">
+    <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Type</th>
+          <th scope="col">Picture</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of pictureList; let getIndexValue = index">
+            <td>{{x.name}}</td>
+            <td>{{x.type}}</td>
+            <td><img style="max-width: 256px; max-height: 256px;" src="{{x.image_data}}"/></td>
+            <td><button type="button" (click)="deletePicture(x.id)" class="btn btn-danger me-1"><i class="bi bi-trash3-fill"></i></button></td>
+        </tr>
+      </tbody>
+      
+</table>
+
+</div>
