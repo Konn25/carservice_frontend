@@ -47,7 +47,7 @@ export class CarsViewComponent {
   }
 
   openUpdateModal(content: any){
-   this.modelReference = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
+   this.modelReference = this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' , size:"lg"});
   }
 
   closeUpdateModal(){
