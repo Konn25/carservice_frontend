@@ -98,7 +98,9 @@ export class CarDataComponent {
       })
     }
 
-    this.generatedRepairList.sort((a,b) => {
+    console.log(this.generatedFuelConsumptionList)
+
+    this.generatedFuelConsumptionList.sort((a,b) => {
       if(a.x>b.x){
         return 1;
       }
@@ -109,6 +111,7 @@ export class CarDataComponent {
 
       return 0;
     })
+    console.log(this.generatedFuelConsumptionList)
 
   }
 
@@ -144,7 +147,7 @@ export class CarDataComponent {
         text: "Fuel consumption and Repair"
       },
       axisX:{
-        valueFormatString: " MMM YYYY",
+        valueFormatString: " YYYY MMM",
         crosshair: {
           enabled: true,
           snapToDataPoint: true
@@ -179,7 +182,7 @@ export class CarDataComponent {
         name: "Repair",
         lineDashType: "dash",
         markerType: "square",
-        xValueFormatString: "MMM YYYY",
+        xValueFormatString: "YYYY MMM DD",
         dataPoints: repairList
       },
       {
@@ -187,6 +190,7 @@ export class CarDataComponent {
         showInLegend: true,
         name: "Fuel consumption",
         lineDashType: "dot",
+        xValueFormatString: "YYYY MMM DD",
         dataPoints: refuelList
       }]
     }	
