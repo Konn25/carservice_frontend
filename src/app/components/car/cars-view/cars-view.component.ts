@@ -3,6 +3,8 @@ import { Car } from 'src/app/interfaces/car_interface';
 import { AuthService } from 'src/app/services/auth_service';
 import { CarService } from 'src/app/services/car_service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { PictureService } from 'src/app/services/picture_service';
+import { Picture } from 'src/app/interfaces/picture_interface';
 
 
 @Component({
@@ -10,16 +12,30 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './cars-view.component.html',
   styleUrls: ['./cars-view.component.css']
 })
+
 export class CarsViewComponent {
+
+  id!: number ;
 
   userAllCars: Car[] = [];
 
+  pictureList: Picture[] = [];
+  pictureList2: Picture[] = [];
+
+  allPictureGetFromDatabase: any[] = [];
+
   modelReference!: NgbModalRef;
 
-  constructor(private carService: CarService, private authService: AuthService, private modalService: NgbModal){}
+  filteredPicture: any;
+
+  constructor(private carService: CarService, private authService: AuthService, private modalService: NgbModal, private imageService: PictureService){}
 
   ngOnInit(){
+    this.id = this.getUserId()!;
     this.getAllCar(this.getUserId());
+
+    this.filterPictures(this.userAllCars,this.allPictureGetFromDatabase);
+    console.log(this.filteredPicture)   
   }
 
   get user(){
@@ -31,7 +47,10 @@ export class CarsViewComponent {
   }
 
   getAllCar(userId: any){
-   return this.carService.getUserAllCarById(userId,this.authService.getToken()).subscribe((car: Car[]) => this.userAllCars = car);
+   return this.carService.getUserAllCarById(userId,this.authService.getToken()).subscribe( (car: Car[]) => {
+      this.userAllCars = car,
+      this.getSpecificCarPicture()
+    });
   }
 
   showAllCar(){
@@ -109,4 +128,76 @@ export class CarsViewComponent {
   }
 
 
+  getCarImageById(car_id: number){
+
+    return this.imageService.getCarAllPicture(car_id,this.authService.getToken()).subscribe((item: Picture[]) => 
+        {
+          this.pictureList = (item),
+          console.log(item),
+          this.getPictureBack();
+
+          for(let i = 0; i< this.pictureList.length; i++){
+            this.allPictureGetFromDatabase.push(this.pictureList[i]);
+          }
+
+          console.log(this.allPictureGetFromDatabase)
+
+          this.allPictureGetFromDatabase.sort((a: Picture,b: Picture) => a.car.id - b.car.id )
+          this.filterPictures(this.userAllCars, this.allPictureGetFromDatabase)
+        }
+    );
+  }
+  
+  getSpecificCarPicture(){
+
+    console.log("Length: " + this.userAllCars.length)
+
+    for(let i = 0; i <= this.userAllCars.length; i++){
+       this.getCarImageById(this.userAllCars[i].id);
+       
+    }
+
+    
+  }
+
+
+  getPictureBack(){
+    this.pictureList.forEach(element => {
+      this.imageService.getPictureById(element.id, this.authService.getToken()).subscribe((data: any) =>{
+        var imageUrl = URL.createObjectURL(data);
+        element.image_data=imageUrl;
+    })
+    });
+
+  }
+
+
+  filterPictures(carList: Car[], picList: Picture[]){
+    this.filteredPicture = new Map<string, Picture>;
+    let test = this.pictureList2;
+
+    for(let i = 0; i < this.userAllCars.length; i++){
+      for(let j = 0; j< this.allPictureGetFromDatabase.length; j++){
+        if(this.allPictureGetFromDatabase[j].car.id == this.userAllCars[i].id){
+          test.push(this.allPictureGetFromDatabase[j]);
+          this.filteredPicture.set(`${i}`,test)
+        }
+      }
+      test = [];
+    }
+
+    console.log(this.filteredPicture);
+
+    return this.filteredPicture;
+  }
+
+  getKeys(map: any){
+    return Array.from(map.keys());
+  }
+
+  getValue(map: any){
+    return Array.from(map.values())
+  }
+
 }
+
