@@ -1,8 +1,10 @@
+import { Car } from "./car_interface";
+
 export interface Picture{
 
     id: number;
     name: string;
-    car_id: number;
+    car: Car;
     type: string;
     image_data: string;
 }
