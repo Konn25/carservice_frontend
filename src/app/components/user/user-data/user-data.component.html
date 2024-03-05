@@ -18,3 +18,24 @@
     </tbody>
   </table>
 </div>
+
+<div style="text-align: center;">
+  <button type="button" (click)="openUpdateModal(updateUser)" class="btn btn-primary me-1 text-center">Update details</button>
+</div>
+
+  <!-- Modify user details modal -->
+  <ng-template #updateUser let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Update details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+          <h2>Name: <input type="text" value={{user?.name}} #userName></h2> 
+          <h2>Nickname: <input type="text" value={{user?.nickName}} #nickname></h2>  
+          <h2>Email: <input type="text" value={{user?.email}} #email></h2>  
+          <h2>Password: <input type="text" value={{user?.password}} #password></h2>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="updateUpdateModal(nickname.value, userName.value, email.value, password.value)">Save</button>
+    </div>
+  </ng-template>
