@@ -34,11 +34,9 @@ export class UserService{
 
     }
 
-    updateUser(user: User, options: any){
+    updateUser(user: any, options: any){
 
-        var reqHeader = new HttpHeaders({ 'Content-Type': 'application/json', options });
-
-        return this.http.post(`${this.APIUrl}/user/update`, user, {headers: reqHeader, responseType: 'text'});
+        return this.http.post(`${this.APIUrl}/user/update`, user, { headers: new HttpHeaders({ "Authorization": "Bearer " + options})});
 
     }
 
