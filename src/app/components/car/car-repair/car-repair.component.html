@@ -11,15 +11,28 @@
             <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
         </div>
         <div class="modal-body">
-            <h2>Repair name: 
-                <select #repairNamesSelect (change)="selectRepairName(repairNamesSelect.value)"  >
-                    <option value="null">----</option> 
-                    <option *ngFor="let y of repairName" value="{{y.id}}" >{{y.repairName}}</option>
-                </select>
+            <table class="mx-auto w-auto table-sm">
+                <tbody>
+                  <tr>
+                    <td>Repair name: </td>
+                    <td>
+                        <select #repairNamesSelect (change)="selectRepairName(repairNamesSelect.value)"  >
+                            <option value="null">----</option> 
+                            <option *ngFor="let y of repairName" value="{{y.id}}" >{{y.repairName}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Price: </td>
+                    <td> <input type="number" min="0" #price></td>
+                  </tr>
+                  <tr>
+                    <td>Date: </td>
+                    <td><input type="date" #date></td>
+                  </tr>
+                </tbody>
+                </table>
 
-            </h2>
-            <h2>Price: <input type="text" #price></h2> 
-            <h2>Date: <input type="text" #date></h2>  
 
         </div>
         <div class="modal-footer">
@@ -58,15 +71,28 @@
                     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
                 </div>
                 <div class="modal-body">
-                    <h2>Repair name: 
-                        <select #repairUpdateNamesSelect (change)="selectRepairName(repairUpdateNamesSelect.value)">
-                            <option value="null">----</option> 
-                            <option *ngFor="let y of repairName" value="{{y.id}}" >{{y.repairName}}</option>
-                        </select>
-        
-                    </h2>
-                    <h2>Price: <input type="text" value={{x.price}} #price></h2> 
-                    <h2>Date: <input type="text" value={{x.date}} #date></h2>  
+                    <table class="mx-auto w-auto table-sm">
+                        <tbody>
+                          <tr>
+                            <td>Repair name: </td>
+                            <td>
+                                <select #repairNamesSelect (change)="selectRepairName(repairNamesSelect.value)"  >
+                                    <option value="null">----</option> 
+                                    <option *ngFor="let y of repairName" value="{{y.id}}" >{{y.repairName}}</option>
+                                </select>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Price: </td>
+                            <td>  <input type="number" min="0" value={{x.price}} #price></td>
+                          </tr>
+                          <tr>
+                            <td>Date: </td>
+                            <td><input type="date" value={{x.date}} #date></td>
+                          </tr>
+                        </tbody>
+                        </table>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-dark" (click)="updateRepair(x.id, price.value, date.value)">Save</button>
