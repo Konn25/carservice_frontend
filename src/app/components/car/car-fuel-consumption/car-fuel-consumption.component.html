@@ -11,10 +11,26 @@
             <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
         </div>
         <div class="modal-body">
-            <h2>Fuel Qunatity: <input type="text" #quantity></h2> 
-            <h2>Price: <input type="text" #price></h2> 
-            <h2>Kilometer: <input type="text" #kilometer></h2> 
-            <h2>Date: <input type="text" #date></h2>  
+            <table class="mx-auto w-auto table-sm">
+                <tbody>
+                  <tr>
+                    <td>Fuel Qunatity: </td>
+                    <td><input type="number" min="0.1" step="0.01" #quantity></td>
+                  </tr>
+                  <tr>
+                    <td>Price: </td>
+                    <td><input type="number" min="0" #price></td>
+                  </tr>
+                  <tr>
+                    <td>Kilometer: </td>
+                    <td><input type="number" min="0" #kilometer></td>
+                  </tr>
+                  <tr>
+                    <td>Date: </td>
+                    <td><input type="date" #date></td>
+                  </tr>
+                </tbody>
+            </table>
 
         </div>
         <div class="modal-footer">
@@ -54,10 +70,27 @@
                         <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
                     </div>
                     <div class="modal-body">
-                        <h2>Fuel Qunatity: <input type="text" value="{{x.fuelQuantity}}" #quantity></h2> 
-                        <h2>Price: <input type="text" value="{{x.price}}" #price></h2> 
-                        <h2>Kilometer: <input type="text" value="{{x.kilometer}}" #kilometer></h2> 
-                        <h2>Date: <input type="text" value="{{x.date}}" #date></h2> 
+                        <table class="mx-auto w-auto table-sm">
+                            <tbody>
+                              <tr>
+                                <td>Fuel Qunatity: </td>
+                                <td><input type="number" min="0.1" step="0.01" value="{{x.fuelQuantity}}" #quantity></td>
+                              </tr>
+                              <tr>
+                                <td>Price: </td>
+                                <td><input type="number" min="0" value="{{x.price}}" #price></td>
+                              </tr>
+                              <tr>
+                                <td>Kilometer: </td>
+                                <td><input type="number" min="0"  value="{{x.kilometer}}" #kilometer></td>
+                              </tr>
+                              <tr>
+                                <td>Date: </td>
+                                <td><input type="date" value="{{x.date}}" #date></td>
+                              </tr>
+                            </tbody>
+                        </table>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-dark" (click)="updateFuelConsumption(x.id, price.value, quantity.value, kilometer.value, date.value)">Save</button>
