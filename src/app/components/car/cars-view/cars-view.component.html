@@ -70,32 +70,33 @@
     <div *ngFor="let x of userAllCars; let i = index"  class="col mb-2">
       <div class="card" style="max-width: 25em;">
         <div id="carouselControls{{x.id}}"  class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
+           <div class="carousel-inner">
              <div *ngFor="let item of filteredPicture.entries()">
               <div *ngFor="let k of item[1]; let j = index">
-                <div *ngIf="k.car.id == x.id && j==0; else anotherCars">
-                  <div class="carousel-item active">
-                    <img class="d-block w-100" src="{{k.image_data}}" class="card-img-top" alt="car">
-                  </div>
-                </div>
-
-                <ng-template #anotherCars>
-                  <div *ngIf="k.car.id == x.id;">
-                    <div class="carousel-item">
-                      <img  class="d-block w-100" src="{{k.image_data}}" class="card-img-top" alt="car">
+                <div *ngIf="checkCondition(x.id.toString(),filteredPicture) ; else noPicture ">
+                  <div *ngIf="k.car.id==x.id;">
+                  <div *ngIf="item[1][0].car.id == x.id">
+                    <div class="carousel-item" [class.active]="j === 0">
+                       <img class="d-block w-100" src="{{k.image_data}}" class="card-img-top" alt="car">
                     </div>
                   </div>
-                </ng-template>
-                  
-              </div>                             
-             </div>
-            </div>
-            <div *ngIf="x.id == userAllCars.length">
-              <div class="carousel-item active">
-                <img  class="d-block w-100" src="https://cdn-icons-png.flaticon.com/128/2555/2555013.png" class="card-img-top" alt="car">
-              </div>
-            </div>
+                </div> 
+              </div> 
 
+                <ng-template #noPicture>
+                  <div *ngIf="j==0">
+                    <div class="carousel-item" [class.active]="j === 0">
+                     <img class="d-block w-100"  src="https://cdn-icons-png.flaticon.com/128/2555/2555013.png" class="card-img-top" alt="car">
+                   </div>
+                  </div>   
+                </ng-template >
+
+               </div>
+             </div>
+            </div>       
+            
+
+            
             <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselControls'+x.id"  data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="visually-hidden">Previous</span>

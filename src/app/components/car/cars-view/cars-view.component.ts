@@ -26,15 +26,19 @@ export class CarsViewComponent {
 
   modelReference!: NgbModalRef;
 
-  filteredPicture: any;
+  filteredPicture:  Map<string, any>;
 
-  constructor(private carService: CarService, private authService: AuthService, private modalService: NgbModal, private imageService: PictureService){}
+  findPicture = true;
+
+  constructor(private carService: CarService, private authService: AuthService, private modalService: NgbModal, private imageService: PictureService){
+    this.getAllCar(this.getUserId());
+    this.filterPictures(this.userAllCars,this.allPictureGetFromDatabase);
+  }
 
   ngOnInit(){
     this.id = this.getUserId()!;
-    this.getAllCar(this.getUserId());
-
-    this.filterPictures(this.userAllCars,this.allPictureGetFromDatabase);
+   
+    
     console.log(this.filteredPicture)   
   }
 
@@ -52,6 +56,19 @@ export class CarsViewComponent {
       this.getSpecificCarPicture()
     });
   }
+
+  checkCondition(key: string, map: Map<any,any>) {
+    return map.has(key);
+  }
+
+
+  noCarPicture() :boolean { 
+
+    this.findPicture = false;
+
+    return this.findPicture;
+  }
+
 
   showAllCar(){
     var i: number;
@@ -133,14 +150,11 @@ export class CarsViewComponent {
     return this.imageService.getCarAllPicture(car_id,this.authService.getToken()).subscribe((item: Picture[]) => 
         {
           this.pictureList = (item),
-          console.log(item),
           this.getPictureBack();
 
           for(let i = 0; i< this.pictureList.length; i++){
             this.allPictureGetFromDatabase.push(this.pictureList[i]);
           }
-
-          console.log(this.allPictureGetFromDatabase)
 
           this.allPictureGetFromDatabase.sort((a: Picture,b: Picture) => a.car.id - b.car.id )
           this.filterPictures(this.userAllCars, this.allPictureGetFromDatabase)
@@ -180,7 +194,7 @@ export class CarsViewComponent {
       for(let j = 0; j< this.allPictureGetFromDatabase.length; j++){
         if(this.allPictureGetFromDatabase[j].car.id == this.userAllCars[i].id){
           test.push(this.allPictureGetFromDatabase[j]);
-          this.filteredPicture.set(`${i}`,test)
+          this.filteredPicture.set(`${this.userAllCars[i].id}`,test)
         }
       }
       test = [];
