@@ -42,8 +42,19 @@ export class CarsViewComponent {
     console.log(this.filteredPicture)   
   }
 
+  hasCarPicture(carId: number): boolean {
+    return Array.from(this.filteredPicture.values()).some(pictures =>
+      pictures.some((pic: { car: { id: number; }; }) => pic.car.id === carId)
+    );
+  }
+
+
   get user(){
     return this.authService.user;
+  }
+
+  get entriesArray() {
+    return Array.from(this.filteredPicture.entries());
   }
 
   getUserId(){
@@ -55,18 +66,6 @@ export class CarsViewComponent {
       this.userAllCars = car,
       this.getSpecificCarPicture()
     });
-  }
-
-  checkCondition(key: string, map: Map<any,any>) {
-    return map.has(key);
-  }
-
-
-  noCarPicture() :boolean { 
-
-    this.findPicture = false;
-
-    return this.findPicture;
   }
 
 
@@ -199,9 +198,7 @@ export class CarsViewComponent {
       }
       test = [];
     }
-
-    console.log(this.filteredPicture);
-
+    
     return this.filteredPicture;
   }
 

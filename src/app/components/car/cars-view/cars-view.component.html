@@ -67,123 +67,109 @@
 <br>
 
 <div class="row row-cols-1 row-cols-md-4 g-4 px-3">
-    <div *ngFor="let x of userAllCars; let i = index"  class="col mb-2">
-      <div class="card" style="max-width: 25em;">
-        <div id="carouselControls{{x.id}}"  class="carousel slide" data-bs-ride="carousel">
-           <div class="carousel-inner">
-             <div *ngFor="let item of filteredPicture.entries()">
-              <div *ngFor="let k of item[1]; let j = index">
-                <div *ngIf="checkCondition(x.id.toString(),filteredPicture) ; else noPicture ">
-                  <div *ngIf="k.car.id==x.id;">
-                  <div *ngIf="item[1][0].car.id == x.id">
-                    <div class="carousel-item" [class.active]="j === 0">
-                       <img class="d-block w-100" src="{{k.image_data}}" class="card-img-top" alt="car">
-                    </div>
+  <div *ngFor="let x of userAllCars; let i = index" class="col mb-2">
+    <div class="card" style="max-width: 25em;">
+      <div id="carouselControls{{x.id}}" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <ng-container *ngIf="hasCarPicture(x.id); else noPicture">
+            <div *ngFor="let item of entriesArray">
+              <div *ngFor="let k of item[1]; let j = index" >
+                <div *ngIf="k.car.id === x.id">
+                  <div class="carousel-item" [class.active]="j === 0" data-bs-interval="3000">
+                    <img class="d-block w-100" src="{{k.image_data}}" alt="car">
                   </div>
-                </div> 
-              </div> 
-
-                <ng-template #noPicture>
-                  <div *ngIf="j==0">
-                    <div class="carousel-item" [class.active]="j === 0">
-                     <img class="d-block w-100"  src="https://cdn-icons-png.flaticon.com/128/2555/2555013.png" class="card-img-top" alt="car">
-                   </div>
-                  </div>   
-                </ng-template >
-
-               </div>
-             </div>
-            </div>       
-            
-
-            
-            <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselControls'+x.id"  data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carouselControls'+x.id" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-        
-         
-            <div class="card-body">
-                <h5 class="card-title">{{x.manufacturer}} {{x.type}}</h5>
-                <p class="card-text"><b>Year:</b> {{x.year}}</p>
-                <p class="card-text"><b>Engine:</b> {{x.motor}}</p>
-                <p class="card-text"><b>Fuel:</b> {{x.fuel}}</p>
-                <p class="card-text"><b>Kilometer:</b>  {{x.kilometer}}</p>
-                <p class="card-text"><b>Price:</b>  {{x.price}}</p>
-
-                <a routerLink="car/data/{{x.id}}" class="btn btn-primary me-1">See more details</a>
-                <button type="button" (click)="openUpdateModal(content)"  class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#updateModal"><i class="bi bi-pencil-square"></i></button>
-                <button type="button" (click)="deleteCar(x.id)" class="btn btn-danger me-1"><i class="bi bi-trash3-fill"></i></button>
-
-
-                <!-- The update modal -->
-                <ng-template #content let-modal>
-	                <div class="modal-header">
-		                <h4 class="modal-title" id="modal-basic-title">Update {{x.manufacturer}} {{x.type}} {{x.year}}</h4>
-		                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-	                </div>
-	                <div class="modal-body">
-                        <table class="mx-auto w-auto table-sm">
-                          <tbody>
-                            <tr>
-                              <td>Manufacturer: </td>
-                              <td><input type="text" value={{x.manufacturer}} #manufacturer></td>
-                            </tr>
-                            <tr>
-                              <td>Type: </td>
-                              <td><input type="text" value={{x.type}} #cartype></td>
-                            </tr>
-                            <tr>
-                              <td>Year: </td>
-                              <td><input type="number" min="1920" max="2024" value={{x.year}} #year></td>
-                            </tr>
-                            <tr>
-                              <td>Engine: </td>
-                              <td><input type="number" min="0.1" max="10.0" step="0.1" value={{x.motor}} #engine></td>
-                            </tr>
-                            <tr>
-                              <td>Fuel: </td>
-                              <td> 
-                                <select name="fuel" id="fuels" #fuel value={{x.fuel}}>
-                                  <option value="null">None</option>
-                                  <option value="Petrol">Petrol</option>
-                                  <option value="Diesel">Diesel</option>
-                                  <option value="Hybrid">Hybrid</option>
-                                  <option value="Electric">Electric</option>
-                                </select>
-                            </td>
-                            </tr>
-                            <tr>
-                              <td>Kilometer:  </td>
-                              <td><input type="text" value={{x.kilometer}} #kilometer></td>
-                            </tr>
-                            <tr>
-                              <td>Price: </td>
-                              <td><input type="text" value={{x.price}} #price></td>
-                            </tr>
-                          </tbody>
-                        </table>
-
-	                </div>
-	                <div class="modal-footer">
-		                <button type="button" class="btn btn-outline-dark" (click)="updateUpdateModal(x.id, manufacturer.value, cartype.value, engine.value, fuel.value, kilometer.value, year.value, price.value)">Save</button>
-	                </div>
-                </ng-template>
-
+                </div>
+              </div>
             </div>
+          </ng-container>
+
+          <ng-template #noPicture>
+            <div class="carousel-item active">
+              <img class="d-block w-100" src="https://cdn-icons-png.flaticon.com/128/2555/2555013.png" alt="no car image available">
+            </div>
+          </ng-template>
         </div>
-  
+
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselControls'+x.id" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carouselControls'+x.id" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+      
+      <div class="card-body">
+        <h5 class="card-title">{{x.manufacturer}} {{x.type}}</h5>
+        <p class="card-text"><b>Year:</b> {{x.year}}</p>
+        <p class="card-text"><b>Engine:</b> {{x.motor}}</p>
+        <p class="card-text"><b>Fuel:</b> {{x.fuel}}</p>
+        <p class="card-text"><b>Kilometer:</b>  {{x.kilometer}}</p>
+        <p class="card-text"><b>Price:</b>  {{x.price}}</p>
+
+        <a routerLink="car/data/{{x.id}}" class="btn btn-primary m-2">See more details</a>
+        <button type="button" (click)="openUpdateModal(content)"  class="btn btn-success m-2" data-bs-toggle="modal" data-bs-target="#updateModal"><i class="bi bi-pencil-square"></i></button>
+        <button type="button" (click)="deleteCar(x.id)" class="btn btn-danger m-2"><i class="bi bi-trash3-fill"></i></button>
+
+
+        <!-- The update modal -->
+        <ng-template #content let-modal>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Update {{x.manufacturer}} {{x.type}} {{x.year}}</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+          </div>
+          <div class="modal-body">
+                <table class="mx-auto w-auto table-sm">
+                  <tbody>
+                    <tr>
+                      <td>Manufacturer: </td>
+                      <td><input type="text" value={{x.manufacturer}} #manufacturer></td>
+                    </tr>
+                    <tr>
+                      <td>Type: </td>
+                      <td><input type="text" value={{x.type}} #cartype></td>
+                    </tr>
+                    <tr>
+                      <td>Year: </td>
+                      <td><input type="number" min="1920" max="2024" value={{x.year}} #year></td>
+                    </tr>
+                    <tr>
+                      <td>Engine: </td>
+                      <td><input type="number" min="0.1" max="10.0" step="0.1" value={{x.motor}} #engine></td>
+                    </tr>
+                    <tr>
+                      <td>Fuel: </td>
+                      <td> 
+                        <select name="fuel" id="fuels" #fuel value={{x.fuel}}>
+                          <option value="null">None</option>
+                          <option value="Petrol">Petrol</option>
+                          <option value="Diesel">Diesel</option>
+                          <option value="Hybrid">Hybrid</option>
+                          <option value="Electric">Electric</option>
+                        </select>
+                    </td>
+                    </tr>
+                    <tr>
+                      <td>Kilometer:  </td>
+                      <td><input type="text" value={{x.kilometer}} #kilometer></td>
+                    </tr>
+                    <tr>
+                      <td>Price: </td>
+                      <td><input type="text" value={{x.price}} #price></td>
+                    </tr>
+                  </tbody>
+                </table>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="updateUpdateModal(x.id, manufacturer.value, cartype.value, engine.value, fuel.value, kilometer.value, year.value, price.value)">Save</button>
+          </div>
+        </ng-template>
     </div>
+  </div>
+
 </div>
 
-
-
-
-
-
-
+</div>
