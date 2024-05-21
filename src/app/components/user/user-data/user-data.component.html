@@ -1,7 +1,7 @@
 <h1 class="text-center">My details</h1>
 <br>
 <div>
-  <table class="table table-striped mx-auto w-auto">
+  <table class="table table-striped mx-auto w-auto" *ngIf="authService.getAuthority() == 'ROLE_USER'">
     <tbody>
       <tr>
         <td>Name: </td>
@@ -12,14 +12,26 @@
         <td>{{user?.nickName}}</td>
       </tr>
       <tr>
-        <td>Email address  </td>
+        <td>Email address:  </td>
         <td>{{user?.email}}</td>
       </tr>
     </tbody>
   </table>
 </div>
 
-<div style="text-align: center;">
+<div>
+  <table class="table table-striped mx-auto w-auto" *ngIf="authService.getAuthority() == 'ROLE_ADMIN'">
+    <tbody>
+      <tr>
+        <td>Email address: </td>
+        <td>{{authService.getEmail()}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div style="text-align: center;" *ngIf="authService.getAuthority() == 'ROLE_USER'">
   <button type="button" (click)="openUpdateModal(updateUser)" class="btn btn-primary me-1 text-center">Update details</button>
 </div>
 

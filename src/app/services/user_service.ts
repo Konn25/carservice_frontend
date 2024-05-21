@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject} from 'rxjs';
-import { User } from '../interfaces/user_interface';
 
 @Injectable({
     providedIn: 'root'
@@ -20,9 +19,9 @@ export class UserService{
     }
 
 
-    getUserDataByEmail(email: string | null, options: any){
-
-        return this.http.get(`${this.APIUrl}/user/data/${email}`, options);
+    getUserDataByEmail(email: string | null , options: any){
+        
+        return this.http.get(`${this.APIUrl}/user/data/${email}`, { headers: new HttpHeaders({ "Authorization": "Bearer " + options})});
 
     }
 
@@ -38,6 +37,15 @@ export class UserService{
 
         return this.http.post(`${this.APIUrl}/user/update`, user, { headers: new HttpHeaders({ "Authorization": "Bearer " + options})});
 
+    }
+
+    getAllUser(options: any){
+        return this.http.get(`${this.APIUrl}/users`, { headers: new HttpHeaders({ "Authorization": "Bearer " + options})});
+
+    }
+
+    deleteUserById(id: number, options: any){
+        return this.http.delete(`${this.APIUrl}/user/delete/${id}`, { headers: new HttpHeaders({ "Authorization": "Bearer " + options})})
     }
 
 

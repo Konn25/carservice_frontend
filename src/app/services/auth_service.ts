@@ -3,6 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable} from 'rxjs';
 import { User } from '../interfaces/user_interface';
 
+import { jwtDecode } from "jwt-decode";
+
+import {CustomJwtPayload}  from '../interfaces/custom_payload';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -70,10 +74,25 @@ export class AuthService {
         return this.getToken() !== null && this.getEmail() !== null;
     }
 
+    getAuthority(){
+
+        let role = "";
+        const token = this.getToken();
+        if(token !== null){
+            const decoded: CustomJwtPayload = jwtDecode(token);
+            const authorities = decoded.authorities[0].authority;
+            console.log(authorities);
+            role = authorities;
+            return role;
+        }
+
+        return role;
+
+    }
+
     logout() {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('email');
     }
-
 
 }
