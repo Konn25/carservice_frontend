@@ -12,7 +12,7 @@ export class UserDataComponent {
 
   modelReference!: NgbModalRef;
 
-  constructor(private userService: UserService ,private authService: AuthService, private modalService: NgbModal){}
+  constructor(private userService: UserService ,public authService: AuthService, private modalService: NgbModal){}
   
   get user(){
     return this.authService.user;

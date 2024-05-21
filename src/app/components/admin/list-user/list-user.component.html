@@ -1,0 +1,20 @@
+<h1 style="text-align: center;" class="my-3">Users</h1>
+
+<div >
+    <table class="table table-striped my-3">
+        <thead>
+            <th scope="col">Name</th>
+            <th scope="col">Nick</th>
+            <th scope="col">Email</th>
+            <th scope="col">Delete</th>
+        </thead>
+        <tbody *ngFor="let user of userList">
+            <tr>
+                <td>{{user.name}}</td>
+                <td>{{user.nickName}}</td>
+                <td>{{user.email}}</td>
+                <td><button type="button" (click)="deleteUserById(user.id)" class="btn btn-danger me-1"><i class="bi bi-trash3-fill"></i></button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

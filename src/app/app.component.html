@@ -15,13 +15,16 @@
         <a class="nav-link" routerLink="login" *ngIf="!authService.isLogedIn()">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="register" *ngIf="!authService.isLogedIn()">Registration</a>
+        <a class="nav-link" routerLink="register" *ngIf="!authService.isLogedIn() ">Registration</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="details" *ngIf="authService.isLogedIn()">My details</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="cars" *ngIf="authService.isLogedIn()">Cars</a>
+        <a class="nav-link" routerLink="cars" *ngIf="authService.getAuthority() == 'ROLE_USER'">Cars</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="admin/users" *ngIf="authService.getAuthority() == 'ROLE_ADMIN' ">Users</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="" *ngIf="authService.isLogedIn()" (click)="authService.logout()">Logout</a>

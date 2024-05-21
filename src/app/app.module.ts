@@ -18,6 +18,7 @@ import { CarRepairComponent } from './components/car/car-repair/car-repair.compo
 import { CarFuelConsumptionComponent } from './components/car/car-fuel-consumption/car-fuel-consumption.component';
 import { CarPictureComponent } from './components/car/car-picture/car-picture.component';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { ListUserComponent } from './components/admin/list-user/list-user.component';
 const routes: Routes = [
 
   {path:'login', component:LoginUserComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'cars/car/data/:id/repairs', component: CarRepairComponent, canActivate:[AuthGuard]},
   {path: 'cars/car/data/:id/fuelconsumption', component: CarFuelConsumptionComponent, canActivate:[AuthGuard]},
   {path: 'cars/car/data/:id/picture', component: CarPictureComponent, canActivate:[AuthGuard]},
+  {path: 'admin/users', component: ListUserComponent, canActivate:[AuthGuard]},
 
 
 ];
@@ -44,7 +46,8 @@ const routes: Routes = [
     CarDataComponent,
     CarRepairComponent,
     CarFuelConsumptionComponent,
-    CarPictureComponent
+    CarPictureComponent,
+    ListUserComponent
   ],
   imports: [
     CanvasJSAngularChartsModule,
