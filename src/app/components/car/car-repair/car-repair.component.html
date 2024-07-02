@@ -7,7 +7,7 @@
     <!-- The new repair modal -->
     <ng-template #newRepair let-modal>
         <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Add new car</h4>
+            <h4 class="modal-title" id="modal-basic-title">Add new repair</h4>
             <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
         </div>
         <div class="modal-body">
@@ -16,7 +16,7 @@
                   <tr>
                     <td>Repair name: </td>
                     <td>
-                        <select #repairNamesSelect (change)="selectRepairName(repairNamesSelect.value)"  >
+                        <select id="selectRepair" #repairNamesSelect (change)="selectRepairName(repairNamesSelect.value)"  >
                             <option value="null">----</option> 
                             <option *ngFor="let y of repairName" value="{{y.id}}" >{{y.repairName}}</option>
                         </select>
@@ -24,11 +24,11 @@
                   </tr>
                   <tr>
                     <td>Price: </td>
-                    <td> <input type="number" min="0" #price></td>
+                    <td> <input id="repairPrice" type="number" min="0" #price></td>
                   </tr>
                   <tr>
                     <td>Date: </td>
-                    <td><input type="date" #date></td>
+                    <td><input id="selectDate" type="date" #date></td>
                   </tr>
                 </tbody>
                 </table>
@@ -36,7 +36,7 @@
 
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-outline-dark" (click)="addNewRepair(price.value, date.value)">Save</button>
+            <button id="saveRepair" type="button" class="btn btn-outline-dark" (click)="addNewRepair(price.value, date.value)">Save</button>
         </div>
     </ng-template>
 
