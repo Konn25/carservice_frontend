@@ -1,0 +1,93 @@
+<div class="container text-center my-3">
+    <h1 class="my-3">Oil consumption </h1>
+    <button type="button" (click)="goBack()" class="btn btn-primary me-2">Back</button>
+    <button type="button" (click)="openModal(newOilConsumption)" class="btn btn-primary me-2">Add new oil consumption</button>
+
+         <!-- The new consumption modal -->
+         <ng-template #newOilConsumption let-modal>
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal-basic-title">Add new fuel consumption</h4>
+                <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+                <table class="mx-auto w-auto table-sm">
+                    <tbody>
+                      <tr>
+                        <td>Oil Qunatity: </td>
+                        <td><input id="oil" type="number" min="0.1" step="0.1" #oil></td>
+                      </tr>
+                      <tr>
+                        <td>Kilometer: </td>
+                        <td><input id="actualKilometer" type="number" min="0" #kilometer></td>
+                      </tr>
+                      <tr>
+                        <td>Date: </td>
+                        <td><input id="oilDate" type="date" #date></td>
+                      </tr>
+                    </tbody>
+                </table>
+    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="addOilConsumption(oil.value, kilometer.value, date.value)">Save</button>
+            </div>
+        </ng-template>
+
+
+    <div>
+        <table class="table my-3">
+            <thead>
+                <tr>
+                  <th scope="col">Date</th>
+                  <th scope="col">Kilometer</th>
+                  <th scope="col">Oil consumption</th>
+                  <th scope="col">Update</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of oilConsumptionList">
+                    <td>{{x.date}}</td>
+                    <td>{{x.kilometer}}</td>
+                    <td>{{x.oilConsumption}}</td>
+                    <td><button type="button" (click)="openModal(content)" class="btn btn-success me-1" data-bs-toggle="modal" data-bs-target="#updateModal">
+                        <i class="bi bi-pencil-square"></i></button></td>
+                    <td><button type="button" (click)="deleteOilConsumption(x.id)"  class="btn btn-danger me-1"><i class="bi bi-trash3-fill"></i></button></td>
+                    
+                     <!-- The update modal -->
+                    <ng-template #content let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Update Oil Consumption</h4>
+                            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="mx-auto w-auto table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td>Oil Qunatity: </td>
+                                    <td><input id="oil" type="number" min="0.1" step="0.1" value="{{x.oilConsumption}}" #oil></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Kilometer: </td>
+                                    <td><input id="actualKilometer" type="number" min="0" value="{{x.kilometer}}" #kilometer></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Date: </td>
+                                    <td><input id="oilDate" type="date" value="{{x.date}}" #date></td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" (click)="updateOilConsumption(x.id, oil.value, kilometer.value, date.value)">Save</button>
+                        </div>
+                    </ng-template>
+    
+                </tr>
+              </tbody>
+              
+        </table>
+    
+    </div>
+</div>

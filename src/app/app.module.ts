@@ -19,19 +19,23 @@ import { CarFuelConsumptionComponent } from './components/car/car-fuel-consumpti
 import { CarPictureComponent } from './components/car/car-picture/car-picture.component';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { ListUserComponent } from './components/admin/list-user/list-user.component';
+import { CarOilConsumptionComponent } from './components/car/car-oil-consumption/car-oil-consumption.component';
+import { CarOrderedPartsComponent } from './components/car/car-ordered-parts/car-ordered-parts.component';
+
 const routes: Routes = [
 
   {path:'login', component:LoginUserComponent},
   {path:'register', component:RegisterUserComponent},
-  {path:'', redirectTo:'/login', pathMatch:'full'},
   {path:'details', component:UserDataComponent, canActivate:[AuthGuard]},
   {path:'cars', component:CarsViewComponent, canActivate:[AuthGuard]},
   {path: 'cars/car/data/:id', component:CarDataComponent, canActivate:[AuthGuard]},
   {path: 'cars/car/data/:id/repairs', component: CarRepairComponent, canActivate:[AuthGuard]},
   {path: 'cars/car/data/:id/fuelconsumption', component: CarFuelConsumptionComponent, canActivate:[AuthGuard]},
+  {path: 'cars/car/data/:id/oilconsumption', component: CarOilConsumptionComponent, canActivate:[AuthGuard]},
+  {path: 'cars/car/data/:id/orderedparts', component: CarOrderedPartsComponent, canActivate:[AuthGuard]},
   {path: 'cars/car/data/:id/picture', component: CarPictureComponent, canActivate:[AuthGuard]},
   {path: 'admin/users', component: ListUserComponent, canActivate:[AuthGuard]},
-
+  {path:'', redirectTo:'/login', pathMatch:'full'},
 
 ];
 
@@ -47,7 +51,9 @@ const routes: Routes = [
     CarRepairComponent,
     CarFuelConsumptionComponent,
     CarPictureComponent,
-    ListUserComponent
+    ListUserComponent,
+    CarOilConsumptionComponent,
+    CarOrderedPartsComponent
   ],
   imports: [
     CanvasJSAngularChartsModule,
@@ -64,4 +70,5 @@ const routes: Routes = [
   providers: [AuthService, AuthGuard, NgbModal],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

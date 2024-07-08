@@ -1,0 +1,127 @@
+<div class="container text-center my-3">
+    <h1 class="my-3">Ordered Parts </h1>
+    <button type="button" (click)="goBack()" class="btn btn-primary me-2">Back</button>
+    <button type="button" (click)="openModal(newOilConsumption)" class="btn btn-primary me-2">Add new car part</button>
+
+
+    <!-- The new consumption modal -->
+    <ng-template #newOilConsumption let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Add new part</h4>
+            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <table class="mx-auto w-auto table-sm">
+                <tbody>
+                  <tr>
+                    <td>Company Name </td>
+                    <td><input id="companyName" type="text" #companyName></td>
+                  </tr>
+                  <tr>
+                    <td>Manufacturer's Name: </td>
+                    <td><input id="manufacturerName" type="text" #manufacturerName></td>
+                  </tr>
+                  <tr>
+                    <td>Part name: </td>
+                    <td>
+                        <select id="selectPart" #partNamesSelect (change)="selectPartName(partNamesSelect.value)"  >
+                            <option value="null">----</option> 
+                            <option *ngFor="let y of partNameList" value="{{y.id}}" >{{y.name}}</option>
+                        </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Date</td>
+                    <td><input id="oilDate" type="date" #date></td>
+                  </tr>
+                  <tr>
+                    <td>Price</td>
+                    <td><input id="partPrice" type="number" min="0" step="0.1"  onkeypress='return event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47' #price></td>
+                  </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark"  (click)="addNewOrderedPart(companyName.value, manufacturerName.value, date.value, price.value)">Save</button>
+        </div>
+    </ng-template>
+
+
+    <div>
+        <table class="table my-3">
+            <thead>
+                <tr>
+                  <th scope="col">Company Name</th>
+                  <th scope="col">Manufacturer's Name</th>
+                  <th scope="col">Part Name</th>
+                  <th scope="col">Picture</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Update</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let x of orderedPartsList">
+                    <td>{{x.companyName}}</td>
+                    <td>{{x.manufacturerName}}</td>
+                    <td>{{this.checkPartsName(x.partNameId)}}</td>
+                    <td><img style="max-width: 256px; max-height: 256px;" src="{{x.carPartPictureName}}"/></td>
+                    <td>{{x.date}}</td>
+                    <td>{{x.price}}</td>
+                    <td><button type="button" class="btn btn-success me-1" (click)="openModal(content)" data-bs-toggle="modal" data-bs-target="#updateModal">
+                        <i class="bi bi-pencil-square"></i></button></td>
+                    <td><button type="button" (click)="deleteOrderedPart(x.id)"  class="btn btn-danger me-1"><i class="bi bi-trash3-fill"></i></button></td>
+                    
+                    <!-- Place here an update modal from car repair module  (click)="openModal(content)"-->
+
+                    <ng-template #content let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">Update Part</h4>
+                            <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="mx-auto w-auto table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td>Company Name </td>
+                                    <td><input id="companyName" type="text" value="{{x.companyName}}" #companyName></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Manufacturer's Name: </td>
+                                    <td><input id="manufacturerName" type="text"  value="{{x.manufacturerName}}" #manufacturerName></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Part name: </td>
+                                    <td>
+                                        <select id="selectPart" #partNamesSelect (change)="selectPartName(partNamesSelect.value)"  >
+                                            <option value="null">----</option> 
+                                            <option *ngFor="let y of partNameList" value="{{y.id}}" [selected]="x.partNameId == y.id" >{{y.name}}</option>
+                                        </select>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>Date</td>
+                                    <td><input id="oilDate" value="{{x.date}}" type="date" #date></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Price</td>
+                                    <td><input id="partPrice" value="{{x.price}}" type="number" min="0" step="0.1"  onkeypress='return event.charCode >= 46 && event.charCode <= 57 && event.charCode != 47' #price></td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark"  (click)="updateOrderedPart(x.id  ,companyName.value, manufacturerName.value, date.value, price.value)">Save</button>
+                        </div>
+                    </ng-template>
+    
+                </tr>
+              </tbody>
+        </table>
+    
+    </div>
+
+</div>

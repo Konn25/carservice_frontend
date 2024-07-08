@@ -7,6 +7,8 @@ import { RepairService } from 'src/app/services/repair_service';
 import { RefuelService } from 'src/app/services/refuel_service';
 import { Repair } from 'src/app/interfaces/repair_interface';
 import { Refuel } from 'src/app/interfaces/refuel_interface';
+import { OilConsumptionService } from 'src/app/services/oil_consumption_service';
+import { OilConsumption } from 'src/app/interfaces/oil_consumption_interface';
 
 @Component({
   selector: 'app-car-data',
@@ -25,16 +27,20 @@ export class CarDataComponent {
 
 	chartOptions!: any; 
 
+  chartOilConsumption!: any;
+
   allRepairList: Repair[] = [];
 
   allFuelConsumptionList: Refuel[] = [];
+  allOilConsumptionList: OilConsumption[] = [];
 
   generatedRepairList: any[] = [];
   generatedFuelConsumptionList: any[] = [];
+  generateOilConsumptionList: any[] = [];
 
 
   constructor(private activatedRoute: ActivatedRoute, private authService: AuthService, private carService: CarService,
-               private repairService: RepairService, private fuelService: RefuelService){}
+               private repairService: RepairService, private fuelService: RefuelService, private oilConsumptinService: OilConsumptionService){}
   
 
   ngOnInit(){
@@ -44,8 +50,16 @@ export class CarDataComponent {
       console.log("Car Id:"+`${this.id}`);
       });
 
+      this.getCarAllOilConsumtion();
       this.getAllCars();
       this.getCarsRepairs();
+
+      this.getCarAllOilConsumtion(),
+      this.generateOilList(this.allOilConsumptionList)
+      this.getOilGraph(this.allOilConsumptionList)
+  
+  
+     
 
   }
 
@@ -194,6 +208,90 @@ export class CarDataComponent {
         dataPoints: refuelList
       }]
     }	
+  }
+
+
+  getCarAllOilConsumtion(){
+    this.oilConsumptinService.getAllOilConsumptionByCarId(this.id, this.authService.getToken()).subscribe(
+      (oilItem: OilConsumption[]) => {
+        this.allOilConsumptionList = oilItem,
+        this.generateOilList(this.allOilConsumptionList)
+        this.getOilGraph(this.allOilConsumptionList)
+      }
+    );
+  }
+
+  generateOilList(oilList: OilConsumption[]){
+    for(var i = 0; i< oilList.length; i++){
+      this.generateOilConsumptionList.push({
+          x: new Date(oilList[i].date),
+          y: oilList[i].oilConsumption
+      })
+    }
+    
+    this.generateOilConsumptionList.sort((a,b) => {
+      if(a.x>b.x){
+        return 1;
+      }
+
+      if(a.x<b.x){
+        return -1;
+      }
+
+      return 0;
+
+    })
+  }
+
+
+  getOilGraph(oilConsumptionList: any){
+    this.chartOilConsumption = {
+      animationEnabled: true,
+      theme: "light2",
+      title:{
+        text: "Oil consumption"
+      },
+      axisX:{
+        valueFormatString: " YYYY MMM",
+        crosshair: {
+          enabled: true,
+          snapToDataPoint: true
+        }
+      },
+      axisY: {
+        title: "Oil consumptin (Liter)",
+        crosshair: {
+          enabled: true
+        }
+      },
+      toolTip:{
+        shared:true
+      },  
+      legend:{
+        cursor: "pointer",
+        verticalAlign: "bottom",
+        horizontalAlign: "right",
+        dockInsidePlotArea: true,
+        itemclick: function(a: any) {
+          if (typeof(a.dataSeries.visible) === "undefined" || a.dataSeries.visible) {
+            a.dataSeries.visible = false;
+          } else{
+            a.dataSeries.visible = true;
+          }
+          a.chart.render();
+        }
+      },
+      data: [{
+        type: "line",
+        showInLegend: true,
+        name: "Oil consumption",
+        lineDashType: "dash",
+        markerType: "square",
+        xValueFormatString: "YYYY MMM DD",
+        dataPoints: this.generateOilConsumptionList
+      }]
+    }	
+
   }
 
 
