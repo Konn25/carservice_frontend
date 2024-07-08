@@ -6,10 +6,20 @@
 <div class="container text-center">
     <button type="button" class="btn btn-primary me-2" routerLink="repairs">Repairs</button>
     <button type="button" class="btn btn-primary me-2" routerLink="fuelconsumption">Fuel consumption</button>
+    <button type="button" class="btn btn-primary me-2" routerLink="oilconsumption">Oil consumption</button>
+    <button type="button" class="btn btn-primary me-2" routerLink="orderedparts">Ordered parts</button>
     <button type="button" class="btn btn-primary me-2" routerLink="picture">Update Picture</button>
+
 </div>
 
-
-<div class="my-4">
-    <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>    
+<div>
+    <div class="my-4">
+        <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>    
+    </div> 
+</div>
+<div>
+    <div class="my-4">
+        <canvasjs-chart [options]="chartOilConsumption" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>    
+    </div>
 </div> 
+
